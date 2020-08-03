@@ -1,0 +1,30 @@
+{
+  "name": "excuses",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Save excuses for later",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js --experimental-modules",
+    "db": "nodemon src/db.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexboots/oh-no.git"
+  },
+  "author": "Fkites",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexboots/oh-no/issues"
+  },
+  "homepage": "https://github.com/alexboots/oh-no#readme",
+  "dependencies": {
+    "@prisma/client": "^2.3.0",
+    "graphql-yoga": "^1.18.3"
+  },
+  "devDependencies": {
+    "@prisma/cli": "^2.3.0",
+    "nodemon": "^2.0.4"
+  }
+}
