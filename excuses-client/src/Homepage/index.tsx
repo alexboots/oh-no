@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useLocalStorage } from '../hooks'
 import { useQuery, useMutation, gql } from '@apollo/client';
 
 const LINKS = gql`
-  query {
+  query GetLinks {
     feed {
       id    
       url
@@ -12,11 +13,12 @@ const LINKS = gql`
 `;
 
 const LOGIN_USER = gql`
-  mutation LoginAndFetchLinks {
+  mutation LoginUser {
     login(
-      email: "alexhays@gmail.com"
+      email: "alexhays@gell.com"
       password: "pass"
     ) {
+      token
       name
       id
       links {
@@ -31,11 +33,17 @@ export const Homepage = () => {
   const { loading, error, data } = useQuery(LINKS);
   const [login, { data: loggedIn }] = useMutation(LOGIN_USER);
 
+  const [token, setToken] = useLocalStorage('token', '');
+  // if(!token) {
+
+  // }
+
   console.log("Homepage -> data", data)
 
   const handleLogin = () => {
     login()
-  }
+  };
+
   return (
     <div>
       homepage

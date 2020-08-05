@@ -2,9 +2,9 @@ import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
 import { getUserId } from '../utils.js';
 
-const post = (parent, args, context, info) => {
+const post = async (parent, args, context, info) => {
   const userId = getUserId(context);
-  const newLink = context.prisma.link.create({
+  const newLink = await context.prisma.link.create({
     data: {
       url: args.url,
       description: args.description,
@@ -14,7 +14,7 @@ const post = (parent, args, context, info) => {
   return newLink;
 };
 
-const updateLink = (parent, args) => {
+const updateLink = async (parent, args) => {
   const linkIndex = links.findIndex(link => link.id === args.id);
   let link = links[linkIndex];
   if(link) {
@@ -30,7 +30,7 @@ const updateLink = (parent, args) => {
   return link;
 };
 
-const deleteLink = (parent, args) => {
+const deleteLink = async (parent, args) => {
   const linkIndex = links.findIndex(link => link.id === args.id);
   const deletedLink = links[linkIndex];
   if(linkIndex > -1) {
@@ -55,6 +55,8 @@ const signup = async (parent, args, context, info) => {
 };
 
 const login = async (parent, args, context, info) => {
+  console.log('logging in');
+
   try {
     const user = await context.prisma.user.findOne({ where: { email: args.email } });
 

@@ -10,8 +10,6 @@ const client = new ApolloClient({
 
 
 function App() {
-  
-  console.log("App -> process.env.REACT_APP_GRAPHQL_URL", process.env.REACT_APP_GRAPHQL_URL)
   return (
     <ApolloProvider client={client}>
       <Homepage />
