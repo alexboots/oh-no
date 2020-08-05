@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useLocalStorage } from '../hooks'
 import { useQuery, useMutation, gql } from '@apollo/client';
 
 const LINKS = gql`
@@ -32,16 +31,14 @@ const LOGIN_USER = gql`
 export const Homepage = () => {
   const { loading, error, data } = useQuery(LINKS);
   const [login, { data: loggedIn }] = useMutation(LOGIN_USER);
-
-  const [token, setToken] = useLocalStorage('token', '');
-  // if(!token) {
-
-  // }
-
   console.log("Homepage -> data", data)
 
   const handleLogin = () => {
-    login()
+    try {
+      login()
+    } catch(error) {
+      console.log("handleLogin -> error", error)
+    }
   };
 
   return (

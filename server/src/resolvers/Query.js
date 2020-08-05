@@ -5,7 +5,6 @@ const feed = async (parent, args, context) => {
 
 const info = () => {
   
-  console.log("info -> 'whatever'", 'whatever')
   return 'hello world'
 }
 
