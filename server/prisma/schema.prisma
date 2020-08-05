@@ -13,6 +13,7 @@ model User {
   email String @unique
   password String
   links Link[]
+  // role Role @default(USER)
 }
 
 model Link {
@@ -23,3 +24,9 @@ model Link {
   postedBy    User? @relation(fields: [postedById], references: [id])
   postedById  Int?
 }
+
+// SQLite doesnt support enums, need to switch to real DB
+// enum Role {
+//   USER
+//   ADMIN
+// }
