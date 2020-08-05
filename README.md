@@ -1,6 +1,8 @@
-
-
-must add `--experimental-modules` on any run server command so we can use import from instead of require
+npxAfter updating prisma.schema:
+ 
 npx prisma migrate save --experimental
 npx prisma migrate up --experimental
+npx prisma generate
+
+
 npx prisma studio --experimental

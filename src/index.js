@@ -1,6 +1,9 @@
 import graphqlYoga from 'graphql-yoga';
 import prismaClient from '@prisma/client';
-import { feed } from './resolvers/Query.js';
+import Query from './resolvers/Query.js';
+import Mutation from './resolvers/Mutation.js';
+import User from './resolvers/User.js';
+import Link from './resolvers/Link.js';
 
 const { GraphQLServer } = graphqlYoga;
 const { PrismaClient } = prismaClient;
@@ -9,54 +12,22 @@ const { PrismaClient } = prismaClient;
 // https://www.prisma.io/docs/guides/deployment/deploying-to-aws-lambda
 
 const resolvers = {
-  Query: {
-    info: () => `This is a yadayada blah`,
-    feed,
-  },
-  Mutation: {
-    post: (parent, args, context, info) => {
-      const newLink = context.prisma.link.create({
-        data: {
-          url: args.url,
-          description: args.description,
-        }
-      });
-
-      return newLink;
-    },
-    updateLink: (parent, args) => {
-      const linkIndex = links.findIndex(link => link.id === args.id);
-      let link = links[linkIndex];
-      if(link) {
-        const { url, description } = args;
-        if(url) {
-          link.url = url;
-        }
-
-        if(description) {
-          link.description = description;
-        }
-      }
-      return link;
-    },
-    deleteLink: (parent, args) => {
-      const linkIndex = links.findIndex(link => link.id === args.id);
-      const deletedLink = links[linkIndex];
-      if(linkIndex > -1) {
-        links.splice(linkIndex, 1);
-      }
-      return deletedLink;
-    },
-  },
+  Query,
+  Mutation,
+  User,
+  Link,
 }
 
 const prisma = new PrismaClient();
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
   resolvers,
-  context: {
-    prisma,
+  context: request => {
+    return {
+      ...request,
+      prisma,
+    }
   }
-})
+});
 
-server.start(() => console.log(`Server is running on http://localhost:4000`))
+server.start({ port: process.env.PORT }, () => console.log(`Server is running on port ${process.env.PORT}`))

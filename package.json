@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js --experimental-modules",
+    "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.dev",
     "db": "nodemon src/db.js"
   },
   "repository": {
@@ -21,10 +21,13 @@
   "homepage": "https://github.com/alexboots/oh-no#readme",
   "dependencies": {
     "@prisma/client": "^2.3.0",
-    "graphql-yoga": "^1.18.3"
+    "bcryptjs": "^2.4.3",
+    "graphql-yoga": "^1.18.3",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "@prisma/cli": "^2.3.0",
+    "dotenv": "^8.2.0",
     "nodemon": "^2.0.4"
   }
 }
