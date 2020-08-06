@@ -1,16 +1,9 @@
 import { HttpLink, ApolloLink, from } from '@apollo/client';
 import { onError } from "@apollo/client/link/error";
 
-
 export const httpLink = new HttpLink({ uri:  `${process.env.REACT_APP_GRAPHQL_URL}` });
 
-export const logOperation = new ApolloLink((operation, forward) => {
-  console.log("operation", operation)
-  return forward(operation);
-});
-
 const linkError = onError(({ graphQLErrors, networkError }) => {
-  console.log('IN LINK ERROR')
   if (graphQLErrors)
     graphQLErrors.map(({ message, locations, path }) =>
       console.log(
@@ -23,15 +16,16 @@ const linkError = onError(({ graphQLErrors, networkError }) => {
 
 export const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
+  const token = localStorage.getItem('token');
   operation.setContext({
     headers: {
-      authorization: localStorage.getItem('token') || null,
+      authorization: token ? `Bearer ${localStorage.getItem('token')}` : "",
     }
   });
 
   return forward(operation);
 });
 
-const link = from([linkError, logOperation, authMiddleware, httpLink ])
+const link = from([linkError, authMiddleware, httpLink ])
 export { link };
 

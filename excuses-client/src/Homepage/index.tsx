@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
 
 const LINKS = gql`
@@ -18,11 +18,13 @@ const LOGIN_USER = gql`
       password: "pass"
     ) {
       token
-      name
-      id
-      links {
-        url
-        description
+      user {
+        name
+        id
+        links {
+          url
+          description
+        }
       }
     }
   }
@@ -30,15 +32,21 @@ const LOGIN_USER = gql`
 
 export const Homepage = () => {
   const { loading, error, data } = useQuery(LINKS);
-  const [login, { data: loggedIn }] = useMutation(LOGIN_USER);
-  console.log("Homepage -> data", data)
+  const [login, { data: loggedInResponse }] = useMutation(LOGIN_USER);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const token = localStorage.getItem('token');
+  
+  console.log("Homepage -> loggedIn", loggedIn)
+
+  if(!loggedIn && token) {
+    setLoggedIn(true);
+  } else if(!loggedIn && loggedInResponse?.login?.token) {
+    localStorage.setItem('token', loggedInResponse.login.token);
+    setLoggedIn(true);
+  }
 
   const handleLogin = () => {
-    try {
-      login()
-    } catch(error) {
-      console.log("handleLogin -> error", error)
-    }
+    login();
   };
 
   return (
