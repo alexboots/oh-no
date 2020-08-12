@@ -2,6 +2,8 @@ import jwt from 'jsonwebtoken';
 import bcryptjs from 'bcryptjs';
 import { getUserId } from '../utils.js';
 
+import { LINK_ADDED } from './Subscription.js'
+
 const post = async (parent, args, context, info) => {
   const userId = getUserId(context);
   const newLink = await context.prisma.link.create({
@@ -11,6 +13,8 @@ const post = async (parent, args, context, info) => {
       postedBy: { connect: { id: userId } },
     }
   });
+  // Need to build out frontend, then finish subscription to see new posts
+  // pubsub.publish(POST_ADDED, { linkAdded: newLink });
   return newLink;
 };
 

@@ -1,26 +1,17 @@
 import Apollo from 'apollo-server';
 import prismaClient from '@prisma/client';
-import Query from './resolvers/Query.js';
-import Mutation from './resolvers/Mutation.js';
-import User from './resolvers/User.js';
-import Link from './resolvers/Link.js';
-import { typeDefs } from './graphql-schema.js'
 
-const { ApolloServer } = Apollo
+import { resolvers } from './resolvers/index.js';
+import { typeDefs }  from './graphql-schema.js'
+
+const { ApolloServer, PubSub } = Apollo
 const { PrismaClient } = prismaClient;
 
 // maybe use aws?
 // https://www.prisma.io/docs/guides/deployment/deploying-to-aws-lambda
 
-const resolvers = {
-  Query,
-  Mutation,
-  User,
-  Link,
-}
-
 const prisma = new PrismaClient();
-// const pubsub = new PubSub();
+const pubsub = new PubSub();
 
 const server = new ApolloServer({
   typeDefs,
@@ -29,7 +20,7 @@ const server = new ApolloServer({
     return {
       ...request,
       prisma,
-      // pubsub,
+      pubsub,
     }
   }
 });

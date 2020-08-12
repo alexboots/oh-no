@@ -36,4 +36,8 @@ export const typeDefs = gql`
     url: String!
     postedBy: User
   }
+
+  type Subscription {
+    linkAdded: Link
+  }
 `;
