@@ -1,7 +1,6 @@
 import React from 'react';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import './App.css';
-import { httpLink, authMiddleware } from './apollo';
 import { Homepage } from './Homepage';
 import { link } from './apollo';
 
@@ -10,7 +9,6 @@ const client = new ApolloClient({
   link,
   cache: new InMemoryCache(),
 });
-
 
 function App() {
   return (

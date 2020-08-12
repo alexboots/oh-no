@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.development",
+    "dev": "nodemon -r dotenv/config src/index.js dotenv_config_path=.env.local",
     "db": "nodemon src/db.js"
   },
   "repository": {
@@ -21,8 +21,9 @@
   "homepage": "https://github.com/alexboots/oh-no#readme",
   "dependencies": {
     "@prisma/client": "^2.3.0",
+    "apollo-server": "^2.16.1",
     "bcryptjs": "^2.4.3",
-    "graphql-yoga": "^1.18.3",
+    "graphql": "^15.3.0",
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {

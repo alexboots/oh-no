@@ -1,11 +1,12 @@
-import graphqlYoga from 'graphql-yoga';
+import Apollo from 'apollo-server';
 import prismaClient from '@prisma/client';
 import Query from './resolvers/Query.js';
 import Mutation from './resolvers/Mutation.js';
 import User from './resolvers/User.js';
 import Link from './resolvers/Link.js';
+import { typeDefs } from './graphql-schema.js'
 
-const { GraphQLServer } = graphqlYoga;
+const { ApolloServer } = Apollo
 const { PrismaClient } = prismaClient;
 
 // maybe use aws?
@@ -19,18 +20,20 @@ const resolvers = {
 }
 
 const prisma = new PrismaClient();
-const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
+// const pubsub = new PubSub();
+
+const server = new ApolloServer({
+  typeDefs,
   resolvers,
   context: request => {
     return {
       ...request,
       prisma,
+      // pubsub,
     }
   }
 });
 
-const options = {
-  port: process.env.PORT,
-}
-server.start(options, () => console.log(`Server is running on port ${process.env.PORT}`))
+server.listen().then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
+});
