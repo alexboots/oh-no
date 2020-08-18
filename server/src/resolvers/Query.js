@@ -4,7 +4,6 @@ const feed = async (parent, args, context) => {
 };
 
 const info = () => {
-  
   return 'hello world'
 }
 
@@ -13,4 +12,9 @@ const link = () => {
   return 'hello world'
 }
 
-export default { feed, info, link };
+const getUser = async(parent, args, context) => {
+  const user = await context.prisma.user.findOne({ where: { email: args.email }});
+  return user;
+};
+
+export default { feed, info, link, getUser };

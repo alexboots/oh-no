@@ -1,7 +1,8 @@
 import React from 'react';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import './App.css';
-import { Homepage } from './Homepage';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { Provider as BumbagProvider } from 'bumbag';
+import { Routes } from './components/Routes'
 import { link } from './apollo';
 
 const client = new ApolloClient({
@@ -13,10 +14,11 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Homepage />
+      <BumbagProvider>
+        <Routes />
+      </BumbagProvider>
     </ApolloProvider>
   );
 }
 
 export default App;
- 

@@ -6,6 +6,7 @@ export const typeDefs = gql`
     info: String!
     feed: [Link!]!
     link(id: ID!): Link
+    getUser(email: String!): User
   }
 
   type Mutation {
@@ -14,6 +15,10 @@ export const typeDefs = gql`
     deleteLink(id: ID!): Link
     signup(email: String!, password: String!, name: String!): AuthPayload
     login(email: String!, password: String!): AuthPayload
+  }
+
+  type Subscription {
+    linkAdded: Link
   }
 
   ################################################################################ 
@@ -25,7 +30,7 @@ export const typeDefs = gql`
 
   type User {
     id: ID!
-    name: String!
+    name: String
     email: String!
     links: [Link!]!
   }
@@ -35,9 +40,5 @@ export const typeDefs = gql`
     description: String!
     url: String!
     postedBy: User
-  }
-
-  type Subscription {
-    linkAdded: Link
   }
 `;

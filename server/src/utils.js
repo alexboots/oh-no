@@ -1,4 +1,7 @@
+import Apollo from 'apollo-server';
 import jwt from 'jsonwebtoken';
+
+const { AuthenticationError } = Apollo;
 
 const getUserId = (context) => {
   try {
@@ -6,12 +9,12 @@ const getUserId = (context) => {
 
     if(Authorization) {
       const token = Authorization.replace('Bearer ', '');
-      const f= jwt.verify(token, process.env.APP_SECRET);
+      const user = jwt.verify(token, process.env.APP_SECRET);
       
-      return f.userId;
+      return user.userId;
     }
-    
-    throw new Error('User not authenticated');
+
+    throw new AuthenticationError('User not authenticated');
   } catch(error) {
     throw error;
   }
