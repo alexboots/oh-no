@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { Text, Container, Card, Group, InputField, Button, Alert, styled, space } from 'bumbag';
+import { Text, Container, Card, Group, InputField, Button, Alert, styled, space, AlertProps, ButtonProps, InputFieldProps } from 'bumbag';
 import { getLoggedInStatus, clearAuthToken, setAuthToken, getHasUserLoggedinBefore } from 'helpers/isLoggedIn';
 
 // Having both signup and login in one file is a bit much
@@ -74,14 +74,14 @@ export const LoginSignup = () => {
           <Group>
             <LoginInputField
               value={email}
-              onChange={ (e) => setEmail(e.target.value) }
+              onChange={ (e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value) }
               type="Email"
               placeholder="your@email.com"
               label="email"
             />
             <LoginInputField
               value={password}
-              onChange={ (e) => setPassword(e.target.value) }
+              onChange={ (e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value) }
               type="password"
               placeholder="Password"
               label="password"
@@ -107,13 +107,13 @@ export const LoginSignup = () => {
   );
 };
 
-const LoginInputField = styled(InputField)`
+const LoginInputField = styled(InputField)<InputFieldProps>`
   input {
     border-radius: 0px;
   }
 `;
 
-const LoginButton = styled(Button)`
+const LoginButton = styled(Button)<ButtonProps>`
   margin-top: 1.5rem;
   width: ${space('2xl')}rem;
 `;
@@ -124,7 +124,7 @@ const DivToggleSignup = styled.div`
   margin-right: 10px;
 `;
 
-const AlertLoginSignup = styled(Alert)`
+const AlertLoginSignup = styled(Alert)<AlertProps>`
   margin-bottom: 1rem;
 `;
 
