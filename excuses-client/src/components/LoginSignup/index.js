@@ -3,6 +3,8 @@ import { gql, useMutation } from '@apollo/client';
 import { Text, Container, Card, Group, InputField, Button, Alert, styled, space } from 'bumbag';
 import { getLoggedInStatus, clearAuthToken, setAuthToken, getHasUserLoggedinBefore } from 'helpers/isLoggedIn';
 
+// Having both signup and login in one file is a bit much
+// but this is a dummy frontend so whatever
 export const LoginSignup = () => {
   const getIsLoggedIn = getLoggedInStatus();
   const [isLoggedIn, setIsLoggedIn] = useState(getIsLoggedIn);
@@ -23,12 +25,12 @@ export const LoginSignup = () => {
   );
 
   useEffect(() => {
-    if(loginResponse?.login?.token) {
+    if(loginResponse?.login?.token && !loginError) {
       setAuthToken(loginResponse?.login?.token);
       setIsLoggedIn(true);
     }
 
-    if(signupResponse?.token) {
+    if(signupResponse?.signup?.token && !signupError) {
       setAuthToken(signupResponse?.token);
       setIsLoggedIn(true);
     }
@@ -144,7 +146,6 @@ const LOGIN_USER = gql`
     }
   }
 `;
-
 
 const SIGNUP_USER = gql`
   mutation SignupUser($email: String!, $password: String!) {

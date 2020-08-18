@@ -44,6 +44,8 @@ const deleteLink = async (parent, args) => {
 };
 
 const signup = async (parent, args, context, info) => {
+  console.log('signup');
+
   try {
     const password = await bcryptjs.hash(args.password, 10);    
     const user = await context.prisma.user.create({ data: { ...args, password } });
@@ -54,18 +56,20 @@ const signup = async (parent, args, context, info) => {
       token,
     }
   } catch (error) {
-    throw error;
+    console.error(error);
+    if(error.code === 'P2002' && error.meta.target[0] === 'email') {
+      throw new Error('This email is already in use. Please login instead.')
+    }
+    throw new Error('Something went wrong with signup');
   }
 };
 
 const login = async (parent, args, context, info) => {
-  console.log('logging in');
-
+  const errorMessage = 'Email or password was incorrect, or user does not exist.';
   try {
     const user = await context.prisma.user.findOne({ where: { email: args.email } });
 
       // Same error so people can't fish for users using their email
-    const errorMessage = 'Email or password was incorrect';
     if(!user) {
       throw new Error(errorMessage);
     }
@@ -82,7 +86,8 @@ const login = async (parent, args, context, info) => {
       user,
     }
   } catch(error) {
-    throw error;
+    console.error(error);
+    throw new Error(errorMessage);
   }
 };
 

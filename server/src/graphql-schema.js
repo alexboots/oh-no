@@ -13,7 +13,7 @@ export const typeDefs = gql`
     post(url: String!, description: String!): Link!
     updateLink(id: ID!, url: String, description: String): Link
     deleteLink(id: ID!): Link
-    signup(email: String!, password: String!, name: String!): AuthPayload
+    signup(email: String!, password: String!): AuthPayload
     login(email: String!, password: String!): AuthPayload
   }
 

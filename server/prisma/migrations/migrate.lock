@@ -1,4 +1,3 @@
 # Prisma Migrate lockfile v1
 
-20200802184731-test
-20200802204741-add-user-to-link
+20200818183350-reset-db
