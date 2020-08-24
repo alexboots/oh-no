@@ -1,7 +1,8 @@
 import Apollo from 'apollo-server';
 import prismaClient from '@prisma/client';
-
+// @ts-ignore
 import { resolvers } from './resolvers/index.js';
+// @ts-ignore
 import { typeDefs }  from './graphql-schema.js'
 
 const { ApolloServer, PubSub } = Apollo

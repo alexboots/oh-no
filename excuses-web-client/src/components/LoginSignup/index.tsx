@@ -4,7 +4,7 @@ import { Text, Container, Card, Group, InputField, Button, Alert, styled, space,
 import { getLoggedInStatus, clearAuthToken, setAuthToken, getHasUserLoggedinBefore } from 'helpers/isLoggedIn';
 
 // Having both signup and login in one file is a bit much
-// but this is a dummy frontend so whatever
+// but this is a dummy frontend so whatever idc ok 
 export const LoginSignup = () => {
   const getIsLoggedIn = getLoggedInStatus();
   const [isLoggedIn, setIsLoggedIn] = useState(getIsLoggedIn);
