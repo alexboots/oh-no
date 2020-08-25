@@ -8,8 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/index.js",
     "build": "tsc",
-    "watch": "tsc -w --incremental",
-    "dev": "nodemon dist/index.js"
+    "watch": "tsc -watch --incremental",
+    "dev": "nodemon -r dotenv/config dist/index.js dotenv_config_path=.env.local"
   },
   "repository": {
     "type": "git",
