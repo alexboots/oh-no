@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useQuery, useMutation, gql } from '@apollo/client';
-import { Redirect } from "react-router-dom";
-import { routes } from 'components/Routes'
+import React from 'react';
+import { useQuery, gql } from '@apollo/client';
+import { PageWithHeader } from 'bumbag';
 
-import { LoginSignup } from 'components/LoginSignup';
-import { getLoggedInStatus } from 'helpers/isLoggedIn';
+import { Header } from './Header';
 
 const LINKS = gql`
   query GetLinks {
@@ -16,20 +14,16 @@ const LINKS = gql`
   }
 `;
 
-export const Main = () => {
+export const Main: React.FC = ({ children }) => {
+  
   const { loading, error, data } = useQuery(LINKS);
 
-  const isLoggedIn = getLoggedInStatus();
-  if(!isLoggedIn) {
-    return (<Redirect to={routes.login} />)
-  }
-
   return (
-    <>
-      hi welcome.
-      excuses blah blah yada yada.
-
-
-    </>
+    <PageWithHeader
+      header={<Header />}
+      border="default"
+    >
+      { children }
+    </PageWithHeader>
   );
 };
