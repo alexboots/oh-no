@@ -1,34 +1,33 @@
 import { useApolloClient } from '@apollo/client';
-import { GET_IS_LOGGED_IN } from 'queries/shared';
+import { GET_IS_LOGGED_IN } from 'queries/client';
+import { isLoggedIn } from 'apollo-config/typePolicies'
+import { useHistory } from 'react-router-dom';
 
-// Not actually hooks
-export const getAuthToken = () => localStorage.getItem('token');
-
-// Hooks
 export const useSetAuthToken = () => {
-  const client = useApolloClient();
+  const history = useHistory();
   return (token: string) => {
     localStorage.setItem('token', token);
-    localStorage.setItem('userHasLoggedinBefore', JSON.stringify(true));
-    client.writeQuery({
-      query: GET_IS_LOGGED_IN,
-      data: {
-        isLoggedIn: true,
-      },
-    });
+    isLoggedIn(true);
+    history.push('/');
   }
 };
 
-
 export const useClearAuthToken = () => {
-  const client = useApolloClient();
+  const history = useHistory();
   return () => {
     localStorage.removeItem('token');
-    client.writeQuery({
-      query: GET_IS_LOGGED_IN,
-      data: {
-        isLoggedIn: false,
-      },
-    })
+    isLoggedIn(false);
+    history.push('/');
   } 
 };
+
+// Test please delete 
+export const useTest = () => {
+  const client = useApolloClient();
+  console.log('useTest');
+  return () => {
+    return client.readQuery({
+      query: GET_IS_LOGGED_IN,
+    })
+  }
+}

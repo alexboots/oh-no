@@ -34,7 +34,6 @@ export const Routes = () => {
   );
 }
 
-
 // Probably need to add protected routes at some point
 // https://reactrouter.com/web/example/auth-workflow
  

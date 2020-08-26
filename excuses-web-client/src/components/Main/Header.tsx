@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { useHistory, Link } from "react-router-dom";
 import { gql, useQuery, useApolloClient } from '@apollo/client';
 
+import { useTest } from 'hooks/loggedIn';
 import { routes } from 'components/Routes'
 import { LogoutButton } from 'components/LoginSignup/Logout';
 import { PageWithHeader, TopNav, Button, Box, Image } from 'bumbag';
-import { GET_IS_LOGGED_IN } from 'queries/shared';
+import { GET_IS_LOGGED_IN } from 'queries/client';
 
 export const Header: React.FC = () => {
   const history = useHistory();
-
+  const test: any = useTest()
   const { data, loading, error } = useQuery(GET_IS_LOGGED_IN);
   const { isLoggedIn } = data;
-  console.log('isLoggedIn', isLoggedIn);
 
   return(
     <TopNav>
@@ -34,7 +34,12 @@ export const Header: React.FC = () => {
             <Button palette="primary" onClick={() => history.push(routes.login)}>Login</Button>
           </TopNav.Item> 
         </> }
-       { isLoggedIn && <LogoutButton /> }
+       { isLoggedIn && 
+        <>
+          <TopNav.Item>
+            <LogoutButton />
+          </TopNav.Item> 
+        </> }
       </TopNav.Section>
     </TopNav>
   );
