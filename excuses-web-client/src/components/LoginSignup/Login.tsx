@@ -1,29 +1,32 @@
 import React, { useEffect } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 
+import { GET_IS_LOGGED_IN } from 'queries/shared';
 import { EnterForm } from './EnterForm';
 import { Container } from 'bumbag';
-import { setAuthToken } from 'helpers/isLoggedIn';
-import { useLoggedInContext } from 'contexts/LoggedInContext';
+import { useSetAuthToken } from 'hooks/loggedIn';
 
 export const Login = () => {
-  const { setIsLoggedIn } = useLoggedInContext();
+  const setAuthToken = useSetAuthToken();
   const [login,
     { data: response, loading, error }] = useMutation(LOGIN_USER,
     { onError: (error) => console.error(error) }
   );
+
+  const { data } = useQuery(GET_IS_LOGGED_IN);
+  const { isLoggedIn } = data;
   
   useEffect(() => {
     if(response?.login?.token && !error) {
       setAuthToken(response?.login?.token);
-      setIsLoggedIn(true);
+      // setIsLoggedIn(true);
     }
   }, [response]);
 
   const handleLogin = (data: { email: string, password: string }) => {
     const { email, password } = data;
     login({ variables: { email, password } });
-    // Should await we try / catch here instead of onError in useMutation?
+    
   };
 
   return (

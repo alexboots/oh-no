@@ -1,16 +1,22 @@
-import React from 'react';
-import { useHistory } from "react-router-dom";
+import React, { useState } from 'react';
+import { useHistory, Link } from "react-router-dom";
+import { gql, useQuery, useApolloClient } from '@apollo/client';
+
 import { routes } from 'components/Routes'
-import { useLoggedInContext } from 'contexts/LoggedInContext';
 import { LogoutButton } from 'components/LoginSignup/Logout';
 import { PageWithHeader, TopNav, Button, Box, Image } from 'bumbag';
+import { GET_IS_LOGGED_IN } from 'queries/shared';
 
 export const Header: React.FC = () => {
   const history = useHistory();
-  const { isLoggedIn } = useLoggedInContext();
+
+  const { data, loading, error } = useQuery(GET_IS_LOGGED_IN);
+  const { isLoggedIn } = data;
+  console.log('isLoggedIn', isLoggedIn);
 
   return(
     <TopNav>
+      <Link to="/logout">logout page</Link>
       <TopNav.Section>
         <TopNav.Item href="https://excuses.com" fontWeight="semibold">
           <Image src="https://picsum.photos/44/44" height="44px" />
@@ -33,3 +39,4 @@ export const Header: React.FC = () => {
     </TopNav>
   );
 }
+

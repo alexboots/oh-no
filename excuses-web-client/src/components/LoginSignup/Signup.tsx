@@ -14,13 +14,13 @@ import { gql, useMutation } from '@apollo/client';
 //   ButtonProps,
 //   InputFieldProps
 // } from 'bumbag';
-// import { getLoggedInStatus, clearAuthToken, setAuthToken } from 'helpers/isLoggedIn';
+// import { asdf } from 'helpers/isLoggedIn';
 
 // Having both signup and login in one file is a bit much
 // but this is a dummy frontend so whatever idc ok 
 export const Signup = () => {
   return <>'hi'</>
-  // const getIsLoggedIn = getLoggedInStatus();
+  
   // const [isLoggedIn, setIsLoggedIn] = useState(getIsLoggedIn);
 
   // const [email, setEmail] = useState('');

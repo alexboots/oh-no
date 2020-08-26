@@ -27,5 +27,5 @@ export const authMiddleware = new ApolloLink((operation, forward) => {
 });
 
 const link = from([linkError, authMiddleware, httpLink ])
-export { link };
 
+export { link };

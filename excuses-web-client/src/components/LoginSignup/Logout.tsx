@@ -1,18 +1,18 @@
 import React from 'react';
+import { useApolloClient, useQuery } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { Container, Button, Card } from 'bumbag';
-
-import { clearAuthToken } from 'helpers/isLoggedIn';
-import { useLoggedInContext } from 'contexts/LoggedInContext';
+import { GET_IS_LOGGED_IN } from 'queries/shared';
+import { useClearAuthToken } from 'hooks/loggedIn';
 
 export const LogoutButton = () => {
-  const { setIsLoggedIn } = useLoggedInContext();
-
+  const { data } = useQuery(GET_IS_LOGGED_IN);
+  const clearAuthToken = useClearAuthToken();
   const logout = () => {
+    console.log('data', data);
     clearAuthToken();
-    setIsLoggedIn(false);
   };
-  
+
   return(
     <Button onClick={() => logout()} marginX="sm">
       Log Out
