@@ -32,7 +32,7 @@ export const Login = () => {
 
   return (
     <Container>
-      <EnterForm onSubmit={handleLogin} submitError={error} loading={loading} />
+      <EnterForm onSubmit={handleLogin} submitError={error} loading={loading} submitButtonText="Login" />
     </Container>
   );
 };

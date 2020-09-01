@@ -16,35 +16,41 @@ import {
   InputFieldProps
 } from 'bumbag';
 
+import { useSetFieldErrors } from 'hooks/field-errors';
 import { routes } from 'components/Routes';
-
-type FormValues = {
-  email: string;
-  password: string;
-};
 
 export const EnterForm = ({
   onSubmit,
+  submitButtonText,
   submitError,
   loading,
 }: {
-  onSubmit: SubmitHandler<FormValues>,
+  onSubmit: SubmitHandler<IFormValues>,
+  submitButtonText: string,
   submitError: ApolloError | undefined,
   loading: boolean,
 }) => {
   const history = useHistory();
   const { pathname } = useLocation();
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, watch, errors: validationErrors } = useForm<IFormValues>();
+  const setFieldErrors = useSetFieldErrors();
 
-  console.log("errors", errors)
-  console.log("watch('email')", watch("email"))
-  console.log("watch('password')", watch("password"))
-  // NEED TO handle input errors for not an email and too short of a password
+  const emailFieldErrors = setFieldErrors({
+    validationErrors,
+    fieldName: 'email',
+    validationRules: [
+      { type: "required", message: "email is required" },
+    ],
+  });
 
-  // <Input state="danger" />
-  // <Input state="success" />
-  // <Input state="warning" />
-  // <Input state="primary" />
+  const passwordFieldErrors = setFieldErrors({
+    validationErrors,
+    fieldName: 'password',
+    validationRules: [
+      { type: "required", message: "password is required" },
+      { type: "minLength", message: "password 6 characters long" },
+    ],
+  });
 
   return(
     <Card alignX="center" marginY="xl">
@@ -56,25 +62,25 @@ export const EnterForm = ({
       <form onSubmit={handleSubmit(onSubmit)}>
         <Group>
           <LoginInputField
-            inputRef={register}
+            inputRef={register({ required: true })}
             type="Email"
             name="email"
             placeholder="your@email.com"
             label="email"
-            
-            isRequired
             autoFocus
+            validationText={ emailFieldErrors.text }
+            state={ emailFieldErrors.state }
           />
           <LoginInputField
-            inputRef={register}
+            inputRef={register({ required: true,  minLength: 6 })}
             type="password"
             name="password"
             placeholder="Password"
             label="password"
-            minLength={6}
-            isRequired
+            validationText={ passwordFieldErrors.text }
+            state={ passwordFieldErrors.state }
           />
-          <SubmitButton isLoading={loading} type="submit">Login</SubmitButton>
+          <SubmitButton isLoading={loading} type="submit">{ submitButtonText }</SubmitButton>
         </Group>
         <DivToggleSignup>
           <Text use="sub">
@@ -99,9 +105,14 @@ export const EnterForm = ({
   );
 };
 
+interface IFormValues {
+  email: string;
+  password: string;
+};
+
 const LoginInputField = styled(InputField)<InputFieldProps>`
   input {
-    border-radius: 0px;
+    // border-radius: 0px;
   }
 `;
 
@@ -119,3 +130,4 @@ const DivToggleSignup = styled.div`
 const AlertLoginSignup = styled(Alert)<AlertProps>`
   margin-bottom: 1rem;
 `;
+

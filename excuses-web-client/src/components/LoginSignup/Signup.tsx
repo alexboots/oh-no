@@ -7,8 +7,6 @@ import { useSetAuthToken } from 'hooks/loggedIn';
 import { EnterForm } from './EnterForm';
 import { AlreadySignedIn } from './AlreadySignedIn';
 
-// Having both signup and login in one file is a bit much
-// but this is a dummy frontend so whatever idc ok 
 export const Signup = () => {
   const setAuthToken = useSetAuthToken();
 
@@ -35,7 +33,7 @@ export const Signup = () => {
 
   return(
     <Container>
-      <EnterForm onSubmit={handleSignup} submitError={error} loading={loading} />
+      <EnterForm onSubmit={handleSignup} submitError={error} loading={loading} submitButtonText="Sign up" />
     </Container>
   );
 };
