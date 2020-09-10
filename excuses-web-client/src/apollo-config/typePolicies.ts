@@ -1,4 +1,6 @@
 import { makeVar } from '@apollo/client';
+
+// Move to reactive-variable.ts or somewhere?
 export const isLoggedIn = makeVar(!!localStorage.getItem('token'));
 
 const typePolicies = {
@@ -14,4 +16,3 @@ const typePolicies = {
 };
 
 export { typePolicies };
-

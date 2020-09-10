@@ -37,6 +37,30 @@
   />
 */
 
+export const useSetFieldErrors = () => {
+  return (payload: ISetFieldErrors): IFieldError => {
+    const { validationErrors, fieldName, validationRules } = payload;
+    const fieldErrors = validationErrors[fieldName];
+
+    if(fieldErrors) {
+      const errorMessage = validationRules
+        .filter(validate => validate.type === fieldErrors.type)
+        .map(validate => { return validate.message })[0];
+  
+      if(errorMessage) {
+        return {
+          text: errorMessage,
+          state: "danger",
+        }
+      }
+    }
+  
+    return {
+      text: "",
+      state: undefined
+    }
+  }
+};
 
 interface IFieldError {
   text: string
@@ -61,28 +85,3 @@ interface ISetFieldErrors {
   fieldName: string;
   validationRules: Array<IValidationRules>;
 }
-
-export const useSetFieldErrors = () => {
-  return (payload: ISetFieldErrors): IFieldError => {
-    const { validationErrors, fieldName, validationRules } = payload;
-    const fieldErrors = validationErrors[fieldName];
-    if(fieldErrors) {
-      const errorMessage = validationRules
-        .filter(validate => validate.type === fieldErrors.type)
-        .map(validate => { return validate.message })[0];
-  
-      if(errorMessage) {
-        return {
-          text: errorMessage,
-          state: "danger",
-        }
-      }
-    }
-  
-    return {
-      text: "",
-      state: undefined
-    }
-  }
-};
-

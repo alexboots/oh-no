@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { Provider as BumbagProvider } from 'bumbag';
+
 import { Routes } from './components/Routes'
 import { link } from './apollo-config/link';
 import { typePolicies } from './apollo-config/typePolicies';

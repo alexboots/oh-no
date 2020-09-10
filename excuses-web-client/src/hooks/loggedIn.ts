@@ -20,14 +20,3 @@ export const useClearAuthToken = () => {
     history.push('/');
   } 
 };
-
-// Test please delete 
-export const useTest = () => {
-  const client = useApolloClient();
-  console.log('useTest');
-  return () => {
-    return client.readQuery({
-      query: GET_IS_LOGGED_IN,
-    })
-  }
-}

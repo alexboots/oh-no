@@ -32,7 +32,7 @@ export const EnterForm = ({
 }) => {
   const history = useHistory();
   const { pathname } = useLocation();
-  const { register, handleSubmit, watch, errors: validationErrors } = useForm<IFormValues>();
+  const { register, handleSubmit, errors: validationErrors } = useForm<IFormValues>();
   const setFieldErrors = useSetFieldErrors();
 
   const emailFieldErrors = setFieldErrors({
@@ -84,14 +84,14 @@ export const EnterForm = ({
         </Group>
         <DivToggleSignup>
           <Text use="sub">
-            { pathname === '/login' && 
+            { pathname === routes.login && 
               <>
                 Don't have an account?
                 <Button variant="link" onClick={() => history.push(routes.signup)}>
                   Sign up
                 </Button>
               </> }
-            { pathname === '/signup' && 
+            { pathname === routes.signup && 
               <>
                 Have an account?
                 <Button variant="link" onClick={() => history.push(routes.login)}>

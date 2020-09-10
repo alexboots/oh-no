@@ -1,8 +1,5 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { PageWithHeader } from 'bumbag';
-
-import { Header } from './Header';
 
 const LINKS = gql`
   query GetLinks {
@@ -18,12 +15,11 @@ export const Main: React.FC = ({ children }) => {
   
   const { loading, error, data } = useQuery(LINKS);
 
+  console.log('data', data);
+
   return (
-    <PageWithHeader
-      header={<Header />}
-      border="default"
-    >
+    <>
       { children }
-    </PageWithHeader>
+    </>
   );
 };

@@ -1,45 +1,66 @@
 import React, { useState } from 'react';
 import { useHistory, Link } from "react-router-dom";
-import { gql, useQuery, useApolloClient } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
-import { useTest } from 'hooks/loggedIn';
 import { routes } from 'components/Routes'
 import { LogoutButton } from 'components/LoginSignup/Logout';
-import { PageWithHeader, TopNav, Button, Box, Image } from 'bumbag';
+import { Icon, Box, TopNav, Button, DropdownMenu, Image } from 'bumbag';
 import { GET_IS_LOGGED_IN } from 'queries/client';
 
 export const Header: React.FC = () => {
   const history = useHistory();
-  const test: any = useTest()
+  const [selectedId, setSelectedId] = useState('get-started');
   const { data, loading, error } = useQuery(GET_IS_LOGGED_IN);
   const { isLoggedIn } = data;
 
   return(
-    <TopNav>
+    <TopNav selectedId={selectedId} onChange={(id: string) => setSelectedId(id)}>
       <Link to="/logout">logout page</Link>
       <TopNav.Section>
         <TopNav.Item href="https://excuses.com" fontWeight="semibold">
           <Image src="https://picsum.photos/44/44" height="44px" />
         </TopNav.Item>
-        <TopNav.Item href="#">New Excuse</TopNav.Item>
-        <TopNav.Item href="#">My Excuses</TopNav.Item>
+        <TopNav.Item navId="add-excuse">
+          <Link to={routes.addExcuse}>Add Excuse</Link>
+        </TopNav.Item>
+        <TopNav.Item navId="my-excuses">
+          <Link to={routes.myExcuses}>My Excuses</Link>
+        </TopNav.Item>
       </TopNav.Section>
       <TopNav.Section marginRight="major-2">
        { !isLoggedIn && 
         <>
           <TopNav.Item>
-            <Button variant="ghost" palette="primary" onClick={() => history.push(routes.signup)}>Sign up</Button>
+            <Button variant="ghost" palette="primary" onClick={() => history.push(routes.signup)}>
+              Sign up
+            </Button>
           </TopNav.Item>
           <TopNav.Item>
-            <Button palette="primary" onClick={() => history.push(routes.login)}>Login</Button>
+            <Button palette="primary" onClick={() => history.push(routes.login)}>
+              Login
+            </Button>
           </TopNav.Item> 
         </> }
        { isLoggedIn && 
-        <>
-          <TopNav.Item>
-            <LogoutButton />
-          </TopNav.Item> 
-        </> }
+        <Box alignY="center">
+          <DropdownMenu
+            menu={
+              <>
+                <DropdownMenu.Item>
+                  link to home ? idk
+                </DropdownMenu.Item>
+                <DropdownMenu.Item>
+                  <LogoutButton />
+                </DropdownMenu.Item>
+              </>
+            }
+          >
+            <Button>
+              <Icon aria-label="Main menu" icon={faBars} type="font-awesome" />
+            </Button>
+          </DropdownMenu>
+        </Box>}
       </TopNav.Section>
     </TopNav>
   );
