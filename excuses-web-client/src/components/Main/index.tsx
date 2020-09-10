@@ -1,24 +1,17 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
-
-const LINKS = gql`
-  query GetLinks {
-    feed {
-      id    
-      url
-      description
-    }
-  }
-`;
+import { Box } from 'bumbag';
+import { Tooltip } from 'components/UI/tooltip';
 
 export const Main: React.FC = ({ children }) => {
-  
-  const { loading, error, data } = useQuery(LINKS);
-
-  console.log('data', data);
-
   return (
     <>
+      <Box height="300px" alignX="center"  alignY="center" width="300px"  backgroundColor="green">
+        <Box backgroundColor="red" width="80px">
+          <Tooltip message="something">
+            <div>hello</div>
+          </Tooltip>
+        </Box>
+      </Box>
       { children }
     </>
   );
