@@ -10,11 +10,12 @@ export const typeDefs = gql`
   }
 
   type Mutation {
+    signup(email: String!, password: String!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
     post(url: String!, description: String!): Link!
     updateLink(id: ID!, url: String, description: String): Link
     deleteLink(id: ID!): Link
-    signup(email: String!, password: String!): AuthPayload
-    login(email: String!, password: String!): AuthPayload
+    postExcuse(s3ImageId: String!, description: String!): Excuse!
   }
 
   type Subscription {
@@ -33,6 +34,7 @@ export const typeDefs = gql`
     name: String
     email: String!
     links: [Link!]!
+    excuses: [Excuse!]!
   }
 
   type Link {
@@ -40,5 +42,12 @@ export const typeDefs = gql`
     description: String!
     url: String!
     postedBy: User
+  }
+
+  type Excuse {
+    id: ID!
+    description: String!
+    s3ImageId: String!
+    ownedBy: User
   }
 `;

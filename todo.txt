@@ -1,0 +1,9 @@
+[x] update prisma schema
+[] change graphql schema to contain excuses
+[] change database to postgres
+  [] update email to be @unique (can only do after postgresql update)
+[] asdfa
+
+
+
+[] dockerize everything ? ? ?

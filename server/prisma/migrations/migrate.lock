@@ -1,3 +1,7 @@
 # Prisma Migrate lockfile v1
 
 20200818183350-reset-db
+20200910173832-usepsql
+20200910175556-usepsql
+20200910175909-add-user-role
+20200910184938-change-img-url-to-s3buckjetid

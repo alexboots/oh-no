@@ -1,6 +1,6 @@
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://alexboots:@localhost:5432/excuses"
+  url = "***"
 }
 
 // MOVE TO ENV

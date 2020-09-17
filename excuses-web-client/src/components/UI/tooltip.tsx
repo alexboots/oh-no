@@ -1,6 +1,15 @@
 import React, { ReactNode, RefObject, useState, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import { styled } from 'bumbag';
 
+// Just messing around
+
+
+/*** Useage: 
+ * 
+    <Tooltip message="something">
+      <div>hello</div>
+    </Tooltip>
+ */
 const tooltipMarginBottom = 8;
 const TooltipBody = styled.div<ITooltipBody>`
   position: relative;
@@ -28,15 +37,18 @@ export const Tooltip: React.FC<ITooltipProps> = ({ children, message }) => {
   const [topMargin, setTopMargin] = useState('0px');
 
   useEffect(() => {
-    if(childrenRect && childrenRect.top) {
+    if(childrenRect && childrenRect.height) {
       setTopMargin(`-${childrenRect.height + tooltipMarginBottom}px`);
     }
   }, [childrenRect])
 
   return (
     <div
+      tabIndex={0}
       onMouseEnter={() => setHovering(true)}
-      onMouseOut={() => setHovering(false)}
+      onMouseLeave={() => setHovering(false)}
+      onFocus={() => setHovering(true)}
+      onBlur={() => setHovering(false)}
     >
       
         <TooltipBody
@@ -65,7 +77,6 @@ const useClientRect = () => {
     if (node !== null && rect === null) {
       const nodeRect: ClientRect = node.getBoundingClientRect();
       setRect(nodeRect);
-      console.log('hi', nodeRect.top);
     }
   }, []);
   return [rect, ref];

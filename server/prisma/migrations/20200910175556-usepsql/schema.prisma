@@ -1,9 +1,7 @@
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://alexboots:@localhost:5432/excuses"
+  url = "***"
 }
-
-// MOVE TO ENV
 
 generator client {
   provider = "prisma-client-js"
@@ -15,7 +13,7 @@ model User {
   email String @unique
   password String
   links Link[]
-  role Role @default(USER)
+  // role Role @default(USER)
 }
 
 model Link {
@@ -31,12 +29,13 @@ model Excuse {
   id          Int      @id @default(autoincrement())
   createdAt   DateTime @default(now())
   description String
-  s3ImageId   String
-  ownedBy     User? @relation(fields: [ownedById], references: [id])
-  ownedById   Int?
+  imageUrl         String @unique
+  ownedBy    User? @relation(fields: [ownedById], references: [id])
+  ownedById  Int?
 }
 
-enum Role {
-  USER
-  ADMIN
-}
+// SQLite doesnt support enums, need to switch to real DB
+// enum Role {
+//   USER
+//   ADMIN
+// }

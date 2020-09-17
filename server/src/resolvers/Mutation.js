@@ -4,6 +4,7 @@ import { getUserId } from '../utils.js';
 
 import { LINK_ADDED } from './Subscription.js'
 
+// Links
 const post = async (parent, args, context, info) => {
   const userId = getUserId(context);
   const newLink = await context.prisma.link.create({
@@ -43,6 +44,25 @@ const deleteLink = async (parent, args) => {
   return deletedLink;
 };
 
+// Excuses 
+
+const postExcuse = async (parent, args, context, info) => {
+  const userId = getUserId(context);
+  const newLink = await context.prisma.excuse.create({
+    data: {
+      s3ImageId: args.s3ImageId,
+      description: args.description,
+      ownedBy: { connect: { id: userId } },
+    }
+  });
+  // Need to build out frontend, then finish subscription to see new posts
+  // pubsub.publish(POST_ADDED, { linkAdded: newLink });
+  return newLink;
+};
+
+
+// Authentication
+
 const signup = async (parent, args, context, info) => {
   console.log('signup');
 
@@ -69,7 +89,8 @@ const login = async (parent, args, context, info) => {
   try {
     const user = await context.prisma.user.findOne({ where: { email: args.email } });
 
-      // Same error so people can't fish for users using their email
+    // Same error so people can't fish for users using their email
+    // Should also do this on signup
     if(!user) {
       throw new Error(errorMessage);
     }
@@ -91,4 +112,4 @@ const login = async (parent, args, context, info) => {
   }
 };
 
-export default { post, updateLink, deleteLink, signup, login };
+export default { post, updateLink, deleteLink, signup, login, postExcuse };
