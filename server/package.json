@@ -23,7 +23,7 @@
   "homepage": "https://github.com/alexboots/oh-no#readme",
   "dependencies": {
     "@prisma/client": "^2.3.0",
-    "apollo-server": "^2.16.1",
+    "apollo-server": "^2.25.4",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "graphql": "^15.3.0",
